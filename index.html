@@ -314,10 +314,10 @@
                 <span><strong>מספר מונה:</strong> <span id="meterNumber"></span></span>
             </div>
             <div style="margin-top: 20px;">
-                <label for="csvUpload" style="background: linear-gradient(90deg, #00d2ff, #3a7bd5); padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                <label id="uploadBtn" style="background: linear-gradient(90deg, #00d2ff, #3a7bd5); padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold;">
                     📂 טען קובץ CSV חדש
                 </label>
-                <input type="file" id="csvUpload" accept=".csv" style="display: none;">
+                <input type="file" id="csvUpload" accept=".csv" style="position: absolute; opacity: 0; width: 0; height: 0;">
                 <p style="margin-top: 10px; font-size: 0.85rem; color: #a0a0a0;">טען קובץ מחברת החשמל לעדכון הנתונים</p>
             </div>
         </header>
@@ -36121,7 +36121,11 @@ const csvData = `DATE,TIME,CONSUMPTION
         // Initialize - wait for file upload
         // loadData();
         
-        // File upload handler
+        // File upload handler - Safari fix: explicit click handler
+        document.getElementById('uploadBtn').addEventListener('click', function() {
+            document.getElementById('csvUpload').click();
+        });
+
         document.getElementById('csvUpload').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
